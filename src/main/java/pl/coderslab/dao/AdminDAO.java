@@ -99,7 +99,6 @@ public class AdminDAO {
                 } else {
                     throw new RuntimeException("Generated key was not found");
                 }
-
             }
         } catch (Exception e) {
             e.printStackTrace();
