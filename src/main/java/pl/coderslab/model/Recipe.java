@@ -8,14 +8,14 @@ public class Recipe {
     private String description;
     private String created;
     private String updated;
-    private String preparationTime;
+    private int preparationTime;
     private String preparation;
     private int adminId;
 
     public Recipe() {
     }
 
-    public Recipe(int id, String name, String ingredients, String description, String created, String updated, String preparationTime, String preparation, int adminId) {
+    public Recipe(int id, String name, String ingredients, String description, String created, String updated, int preparationTime, String preparation, int adminId) {
         this.id = id;
         this.name = name;
         this.ingredients = ingredients;
@@ -75,11 +75,11 @@ public class Recipe {
         this.updated = updated;
     }
 
-    public String getPreparationTime() {
+    public int getPreparationTime() {
         return preparationTime;
     }
 
-    public void setPreparationTime(String preparationTime) {
+    public void setPreparationTime(int preparationTime) {
         this.preparationTime = preparationTime;
     }
 

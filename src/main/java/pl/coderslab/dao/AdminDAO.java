@@ -3,7 +3,6 @@ package pl.coderslab.dao;
 import org.mindrot.jbcrypt.BCrypt;
 import pl.coderslab.exception.NotFoundException;
 import pl.coderslab.model.Admin;
-import pl.coderslab.model.Book;
 import pl.coderslab.utils.DbUtil;
 
 import java.sql.Connection;
@@ -19,6 +18,7 @@ public class AdminDAO {
     private static final String FIND_ALL_ADMIN_QUERY = "SELECT * FROM admins;";
     private static final String READ_ADMIN_QUERY = "SELECT * from admins where id = ?;";
     private static final String UPDATE_ADMIN_QUERY = "UPDATE	admins SET first_name = ? , last_name = ?, email = ?, password = ?, superadmin = ?, enable = ? WHERE	id = ?;";
+    private static final String FIND_BY_EMAIL_QUERY = "SELECT * from admins where email = ?";
 
     public String hashPassword(String password) {
         String first = BCrypt.hashpw(password, BCrypt.gensalt());
@@ -99,7 +99,6 @@ public class AdminDAO {
                 } else {
                     throw new RuntimeException("Generated key was not found");
                 }
-
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -139,4 +138,33 @@ public class AdminDAO {
         }
 
     }
+
+    public Admin findByEmail(String email, String password) {
+        try (Connection connection = DbUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_BY_EMAIL_QUERY)
+        ) {
+            statement.setString(1, email);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    String hashedPassword = resultSet.getString("password");
+                    if (BCrypt.checkpw(password, hashedPassword)) {
+                        Admin admin = new Admin();
+                        admin.setId(resultSet.getInt("id"));
+                        admin.setFirstName(resultSet.getString("first_name"));
+                        admin.setLastName(resultSet.getString("last_name"));
+                        admin.setEmail(resultSet.getString("email"));
+                        admin.setPassword(hashedPassword);
+                        admin.setSuperAdmin(resultSet.getInt("superadmin"));
+                        admin.setEnable(resultSet.getInt("enable"));
+                        return admin;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 }
