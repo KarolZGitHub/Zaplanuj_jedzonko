@@ -30,7 +30,7 @@
                 <a class="nav-link color-header" href="<c:url value="/register"/>">rejestracja</a>
             </li>
             <li class="nav-item ml-4">
-                <a class="nav-link color-header" href="<c:url value="/about"/>">O aplikacji</a>
+                <a class="nav-link color-header" href="<c:url value="/about"/>">o aplikacji</a>
             </li>
             <li class="nav-item ml-4">
                 <a class="nav-link disabled" href="recipes.html">Przepisy</a>
