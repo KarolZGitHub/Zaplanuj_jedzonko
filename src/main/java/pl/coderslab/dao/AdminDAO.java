@@ -139,22 +139,25 @@ public class AdminDAO {
 
     }
 
-    public Admin findByEmail(String email) {
-        Admin admin = new Admin();
+    public Admin findByEmail(String email, String password) {
         try (Connection connection = DbUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_BY_EMAIL_QUERY)
         ) {
             statement.setString(1, email);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    admin.setId(resultSet.getInt("id"));
-                    admin.setFirstName(resultSet.getString("first_name"));
-                    admin.setLastName(resultSet.getString("last_name"));
-                    admin.setEmail(resultSet.getString("email"));
-                    admin.setPassword(resultSet.getString("password"));
-                    admin.setSuperAdmin(resultSet.getInt("superadmin"));
-                    admin.setEnable(resultSet.getInt("enable"));
-                    return admin;
+                    String hashedPassword = resultSet.getString("password");
+                    if (BCrypt.checkpw(password, hashedPassword)) {
+                        Admin admin = new Admin();
+                        admin.setId(resultSet.getInt("id"));
+                        admin.setFirstName(resultSet.getString("first_name"));
+                        admin.setLastName(resultSet.getString("last_name"));
+                        admin.setEmail(resultSet.getString("email"));
+                        admin.setPassword(hashedPassword);
+                        admin.setSuperAdmin(resultSet.getInt("superadmin"));
+                        admin.setEnable(resultSet.getInt("enable"));
+                        return admin;
+                    }
                 }
             }
         } catch (Exception e) {
@@ -162,5 +165,6 @@ public class AdminDAO {
         }
         return null;
     }
+
 
 }
