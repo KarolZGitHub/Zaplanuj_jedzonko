@@ -28,7 +28,7 @@ public class Login extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("admin", admin);
             session.setAttribute("adminId", admin.getId());
-            response.sendRedirect("/home");
+            response.sendRedirect("/dashboard");
         } else {
             request.setAttribute("message", "Nieprawidłowy email lub hasło");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
