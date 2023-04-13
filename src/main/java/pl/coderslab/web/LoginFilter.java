@@ -1,5 +1,7 @@
 package pl.coderslab.web;
 
+import pl.coderslab.model.Admin;
+
 import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -20,12 +22,12 @@ public class LoginFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession();
-        boolean check = session != null && session.getAttribute("login") != null && session.getAttribute("login").equals("loggedIn");
-        if (check) {
-            String login = (String) session.getAttribute("login");
-            session.setAttribute(login , "loggedIn");
-        }else {
+
+        if (session.getAttribute("admin") == null) {
             httpServletResponse.sendRedirect("/login");
+        } else {
+            Admin admin = (Admin) session.getAttribute("admin");
+            session.setAttribute("admin", admin);
         }
         chain.doFilter(request, response);
     }

@@ -2,6 +2,7 @@ package pl.coderslab.dao;
 
 import pl.coderslab.exception.NotFoundException;
 import pl.coderslab.model.Plan;
+import pl.coderslab.model.PlanDetail;
 import pl.coderslab.utils.DbUtil;
 
 import java.sql.Connection;
@@ -18,6 +19,12 @@ public class PlanDAO {
     private static final String READ_PLAN_QUERY = "SELECT * from plan where id = ?;";
     private static final String UPDATE_PLAN_QUERY = "UPDATE	plan SET name = ? , description = ?, created = ?, admin_id = ? WHERE id = ?;";
     private static final String SELECT_COUNT_OF_PLANS_QUERY = "SELECT COUNT (*) FROM plan WHERE admin_id=?";
+    private static final String SELECT_LAST_PLAN_QUERY = "SELECT day_name.name AS day_name, meal_name, recipe.name AS recipe_name, recipe.description AS recipe_description \" +\n" +
+            "                \"FROM recipe_plan \" +\n" +
+            "                \"JOIN day_name ON day_name.id = day_name_id \" +\n" +
+            "                \"JOIN recipe ON recipe.id = recipe_id \" +\n" +
+            "                \"WHERE recipe_plan.plan_id = (SELECT MAX(id) FROM plan WHERE admin_id = ?) \" +\n" +
+            "                \"ORDER BY day_name.display_order, recipe_plan.display_order\"";
 
     public Plan read(Integer planId) {
         Plan plan = new Plan();
@@ -133,6 +140,30 @@ public class PlanDAO {
             e.printStackTrace();
         }
         return count;
+    }
+
+    // Metoda do pobierania planu oraz jego szczegółów na stronie głównej aplikacji
+    public List<PlanDetail> getPlanDetails(int adminId) {
+        List<PlanDetail> planDetails = new ArrayList<>();
+        String sql = SELECT_LAST_PLAN_QUERY;
+
+        try (Connection connection = DbUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, adminId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String dayName = resultSet.getString("day_name");
+                String mealName = resultSet.getString("meal_name");
+                String recipeName = resultSet.getString("recipe_name");
+                String recipeDescription = resultSet.getString("recipe_description");
+
+                PlanDetail planDetail = new PlanDetail(dayName, mealName, recipeName, recipeDescription);
+                planDetails.add(planDetail);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return planDetails;
     }
 }
 
