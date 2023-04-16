@@ -28,6 +28,7 @@ public class Login extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("admin", admin);
             session.setAttribute("adminId", admin.getId());
+            request.setAttribute("name",admin.getFirstName());
             response.sendRedirect("/dashboard");
         } else {
             request.setAttribute("message", "Nieprawidłowy email lub hasło");
