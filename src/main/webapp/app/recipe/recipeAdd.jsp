@@ -35,7 +35,7 @@
                     <tr class="d-flex">
                         <th scope="row" class="col-2">Przygotowanie (minuty)</th>
                         <td class="col-3">
-                            <input name="preparationTime" class="p-1" type="number" value="">
+                            <input name="preparation_time" class="p-1" type="number" value="">
                         </td>
                     </tr>
                     </tbody>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="row d-flex">
                     <div class="col-5 p-4">
-                        <textarea name="preparationMethod" class="w-100 p-1" rows="10"></textarea>
+                        <textarea name="preparation" class="w-100 p-1" rows="10"></textarea>
                     </div>
                     <div class="col-2"></div>
 

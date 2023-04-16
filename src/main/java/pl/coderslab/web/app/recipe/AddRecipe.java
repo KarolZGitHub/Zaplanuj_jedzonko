@@ -25,17 +25,22 @@ public class AddRecipe extends HttpServlet {
 
         recipe.setName(request.getParameter("name"));
         recipe.setDescription(request.getParameter("description"));
-        recipe.setPreparationTime(Integer.parseInt(request.getParameter("preparationTime")));
-        recipe.setPreparation(request.getParameter("preparationMethod"));
+        recipe.setPreparationTime(Integer.parseInt(request.getParameter("preparation_time")));
+        recipe.setPreparation(request.getParameter("preparation"));
         recipe.setIngredients(request.getParameter("ingredients"));
+
+        // Pobranie identyfikatora admin_id z sesji i ustawienie wartości pola admin_id w obiekcie modelu Recipe
+        HttpSession session = request.getSession();
+        int adminId = (int) session.getAttribute("adminId");
+        recipe.setAdminId(adminId);
 
         // Zapisanie obiektu do bazy danych
         RecipeDao recipeDao=new RecipeDao();
         recipeDao.create(recipe);
         request.setAttribute("name",recipe.getName());
         request.setAttribute("description",recipe.getDescription());
-        request.setAttribute("preparationTime",recipe.getPreparationTime());
-        request.setAttribute("preparationMethod",recipe.getPreparation());
+        request.setAttribute("preparation_time",recipe.getPreparationTime());
+        request.setAttribute("preparation",recipe.getPreparation());
         request.setAttribute("ingredients",recipe.getIngredients());
 
         // Przekieruj na stronę z listą wszystkich przepisów
