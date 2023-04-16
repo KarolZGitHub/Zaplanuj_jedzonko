@@ -29,7 +29,7 @@ public class AddRecipe extends HttpServlet {
         recipe.setPreparation(request.getParameter("preparation"));
         recipe.setIngredients(request.getParameter("ingredients"));
 
-        // Pobranie identyfikatora admin_id z sesji i ustawienie wartości pola admin_id w obiekcie modelu Recipe
+        // Pobranie identyfikatora adminId z sesji i ustawienie wartości pola admin_id w obiekcie modelu Recipe
         HttpSession session = request.getSession();
         int adminId = (int) session.getAttribute("adminId");
         recipe.setAdminId(adminId);

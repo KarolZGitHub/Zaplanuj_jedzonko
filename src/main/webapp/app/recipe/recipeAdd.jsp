@@ -4,7 +4,6 @@
 <%@ include file="/logged/header.jsp" %>
 <%@ include file="/logged/sideMenu.jsp" %>
 
-<body>
 <div class="m-4 p-3 width-medium text-color-darker">
     <div class="dashboard-content border-dashed p-3 m-4 view-height">
         <!-- Dodaj atrybuty action i method do formularza -->
@@ -61,6 +60,4 @@
     </div>
 </div>
 
-</body>
-
-<%@ include file="/footer.jsp" %>
+<%@ include file="/logged/footer.jsp" %>

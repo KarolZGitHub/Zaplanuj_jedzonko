@@ -15,9 +15,11 @@ import java.util.List;
 public class PlanList extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PlanDAO planDAO = new PlanDAO();
+        List<Plan> plans = planDAO.findAll();
+
+        request.setAttribute("plan", plans);
+        request.getRequestDispatcher("/app/plan/planList.jsp").forward(request, response);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    }
 }

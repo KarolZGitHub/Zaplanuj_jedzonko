@@ -22,4 +22,4 @@
 
 </body>
 
-<%@ include file="/footer.jsp" %>
+<%@ include file="/logged/footer.jsp" %>

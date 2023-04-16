@@ -24,7 +24,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/schedules">
+                <a class="nav-link" href="<c:url value="/app/plan/list"/>">
                     <span>Plany</span>
                     <i class="fas fa-angle-right"></i>
                 </a>
