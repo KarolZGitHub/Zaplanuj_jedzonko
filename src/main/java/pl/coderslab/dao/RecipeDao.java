@@ -84,9 +84,9 @@ private static final String COUNT_ALL_RECIPE_BY_ADMIN_QUERY ="SELECT COUNT(*) as
             insertStm.setString(3, recipe.getDescription());
             insertStm.setString(4, recipe.getCreated());
             insertStm.setString(5, recipe.getUpdated());
-            insertStm.setInt(5, recipe.getPreparationTime());
-            insertStm.setString(6, recipe.getPreparation());
-            insertStm.setInt(7, recipe.getAdminId());
+            insertStm.setInt(6, recipe.getPreparationTime());
+            insertStm.setString(7, recipe.getPreparation());
+            insertStm.setInt(8, recipe.getAdminId());
             int result = insertStm.executeUpdate();
 
             if (result != 1) {

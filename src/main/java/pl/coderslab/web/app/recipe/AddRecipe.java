@@ -1,5 +1,8 @@
 package pl.coderslab.web.app.recipe;
 
+import pl.coderslab.dao.RecipeDao;
+import pl.coderslab.model.Recipe;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -16,11 +19,26 @@ public class AddRecipe extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Odbierz dane z formularza
-        String title = request.getParameter("title");
-        String description = request.getParameter("description");
+
+        // Tworzenie obiektu modelu Recipe
+        Recipe recipe = new Recipe();
+
+        recipe.setName(request.getParameter("name"));
+        recipe.setDescription(request.getParameter("description"));
+        recipe.setPreparationTime(Integer.parseInt(request.getParameter("preparationTime")));
+        recipe.setPreparation(request.getParameter("preparationMethod"));
+        recipe.setIngredients(request.getParameter("ingredients"));
+
+        // Zapisanie obiektu do bazy danych
+        RecipeDao recipeDao=new RecipeDao();
+        recipeDao.create(recipe);
+        request.setAttribute("name",recipe.getName());
+        request.setAttribute("description",recipe.getDescription());
+        request.setAttribute("preparationTime",recipe.getPreparationTime());
+        request.setAttribute("preparationMethod",recipe.getPreparation());
+        request.setAttribute("ingredients",recipe.getIngredients());
 
         // Przekieruj na stronę z listą wszystkich przepisów
-        response.sendRedirect("/app/recipe/list");
+        response.sendRedirect(request.getContextPath() + "/app/recipe/list");
     }
 }
