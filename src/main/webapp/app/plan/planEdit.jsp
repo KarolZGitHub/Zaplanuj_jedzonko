@@ -4,8 +4,11 @@
 <%@ include file="/logged/header.jsp" %>
 <%@ include file="/logged/sideMenu.jsp" %>
 
-<body>
 
-</body>
+
+
+
+
+
 
 <%@ include file="/logged/footer.jsp" %>

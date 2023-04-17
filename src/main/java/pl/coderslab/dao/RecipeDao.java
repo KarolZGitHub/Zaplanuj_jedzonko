@@ -38,7 +38,7 @@ private static final String COUNT_ALL_RECIPE_BY_ADMIN_QUERY ="SELECT COUNT(*) as
                     recipe.setUpdated(resultSet.getString("updated"));
                     recipe.setPreparationTime(resultSet.getInt("preparation_time"));
                     recipe.setPreparation(resultSet.getString("preparation"));
-                    recipe.setId(resultSet.getInt("admin_id"));
+                    recipe.setAdminId(resultSet.getInt("admin_id"));
                 }
             }
         } catch (Exception e) {
@@ -64,7 +64,7 @@ private static final String COUNT_ALL_RECIPE_BY_ADMIN_QUERY ="SELECT COUNT(*) as
                 recipeToAdd.setUpdated(resultSet.getString("updated"));
                 recipeToAdd.setPreparationTime(resultSet.getInt("preparation_time"));
                 recipeToAdd.setPreparation(resultSet.getString("preparation"));
-                recipeToAdd.setId(resultSet.getInt("admin_id"));
+                recipeToAdd.setAdminId(resultSet.getInt("admin_id"));
                 recipesList.add(recipeToAdd);
             }
 
