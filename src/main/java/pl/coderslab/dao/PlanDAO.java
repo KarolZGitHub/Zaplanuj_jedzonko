@@ -18,7 +18,7 @@ public class PlanDAO {
     private static final String FIND_ALL_PLANS_QUERY = "SELECT * FROM plan;";
     private static final String READ_PLAN_QUERY = "SELECT * from plan where id = ?;";
     private static final String UPDATE_PLAN_QUERY = "UPDATE	plan SET name = ? , description = ?, created = ?, admin_id = ? WHERE id = ?;";
-    private static final String SELECT_COUNT_OF_PLANS_QUERY = "SELECT COUNT (*) FROM plan WHERE admin_id=?";
+    private static final String SELECT_COUNT_OF_PLANS_QUERY = "SELECT COUNT(*) FROM plan WHERE admin_id = ?";
     private static final String SELECT_LAST_PLAN_QUERY = "SELECT day_name.name AS day_name, meal_name, recipe.name AS recipe_name, recipe.description AS recipe_description \" +\n" +
             "                \"FROM recipe_plan \" +\n" +
             "                \"JOIN day_name ON day_name.id = day_name_id \" +\n" +
@@ -130,12 +130,15 @@ public class PlanDAO {
         }
     }
     public int countOfPlans(int adminId){
-        int count = -1;
+        int count = 0;
         try(Connection connection = DbUtil.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(SELECT_COUNT_OF_PLANS_QUERY)){
-           preparedStatement.setInt(1,adminId);
-           ResultSet resultSet = preparedStatement.executeQuery();
-           count = resultSet.getInt(1);
+           preparedStatement.setInt(1, adminId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    count = resultSet.getInt(1);
+                }
+            }
         }catch (SQLException e){
             e.printStackTrace();
         }
