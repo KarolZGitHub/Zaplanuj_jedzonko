@@ -59,4 +59,15 @@ public class RecipePlanDao {
         return recipePlansList;
     }
 
+    public void delete(Integer recipePlanId) {
+        try (Connection connection = DbUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement("DELETE FROM recipe_plan WHERE id = ?;")
+        ) {
+            statement.setInt(1, recipePlanId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

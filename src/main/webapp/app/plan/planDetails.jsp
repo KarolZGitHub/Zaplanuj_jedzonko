@@ -48,15 +48,23 @@
                 </thead>
                 <tbody class="text-color-lighter">
                 <tr class="d-flex">
+
+                </tr>
+                        <!-- Formularz do usuwania przepisu z planu -->
+                        <form action="/app/plan/deleteRecipePlanConfirmation.jsp" method="post">
+                            <input type="hidden" name="plan_id" value="${plan.id}">
+                            <input type="hidden" name="recipe_id" value="${recipe.id}">
+                <tr class="d-flex">
                     <td class="col-2">${recipePlan.mealName}</td>
                     <td class="col-7">${recipe.name}</td>
                     <td class="col-1 center">
-                        <a href="#" class="btn btn-danger rounded-0 text-light m-1">Usuń</a>
+                        <button type="submit" class="btn btn-danger rounded-0 text-light m-1">Usuń</button>
                     </td>
                     <td class="col-2 center">
                         <a href="<c:url value='/app/recipe/details?id=${recipe.id}'/>" class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
                     </td>
                 </tr>
+                        </form>
                 </tbody>
                 </c:forEach>
             </table>
