@@ -19,7 +19,7 @@ public class PlanDAO {
     private static final String READ_PLAN_QUERY = "SELECT * from plan where id = ?;";
     private static final String UPDATE_PLAN_QUERY = "UPDATE	plan SET name = ? , description = ?, created = ?, admin_id = ? WHERE id = ?;";
     private static final String SELECT_COUNT_OF_PLANS_QUERY = "SELECT COUNT(*) FROM plan WHERE admin_id = ?";
-    private static final String SELECT_LAST_PLAN_QUERY = "SELECT day_name.name AS day_name, meal_name, recipe.name AS recipe_name, recipe.description AS recipe_description FROM recipe_plan JOIN day_name ON day_name.id = day_name_id JOIN recipe ON recipe.id = recipe_id WHERE recipe_plan.plan_id = (SELECT MAX(6) FROM plan WHERE admin_id = ?) ORDER BY day_name.display_order, recipe_plan.display_order";
+    private static final String SELECT_LAST_PLAN_QUERY = "SELECT day_name.name AS day_name, meal_name, recipe.name AS recipe_name, recipe.description AS recipe_description FROM recipe_plan JOIN day_name ON day_name.id = day_name_id JOIN recipe ON recipe.id = recipe_id WHERE recipe_plan.plan_id = (SELECT MAX(id) FROM plan WHERE admin_id = ?) ORDER BY day_name.display_order, recipe_plan.display_order";
 
     public Plan read(Integer planId) {
         Plan plan = new Plan();

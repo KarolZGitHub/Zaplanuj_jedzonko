@@ -34,7 +34,7 @@ public class Dashboard extends HttpServlet {
 
 
         request.getRequestDispatcher("/logged/dashboard.jsp").forward(request, response);
-        getServletContext().getRequestDispatcher("/logged/dashboard.jsp").forward(request, response);
+
     }
 
 
