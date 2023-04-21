@@ -93,10 +93,11 @@ public class PlanDAO {
         }
         return null;
     }
-    public void delete(Integer planId){
+
+    public void delete(Integer planId) {
         try (Connection connection = DbUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_PLAN_QUERY);
-        ){
+        ) {
             preparedStatement.setInt(1, planId);
             preparedStatement.executeUpdate();
 
@@ -105,36 +106,38 @@ public class PlanDAO {
                 throw new NotFoundException("Product not found");
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public void update(Plan plan){
-        try(Connection connection = DbUtil.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PLAN_QUERY);
-            ){
+
+    public void update(Plan plan) {
+        try (Connection connection = DbUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PLAN_QUERY);
+        ) {
             preparedStatement.setInt(5, plan.getId());
-            preparedStatement.setString(1,plan.getName());
-            preparedStatement.setString(2,plan.getDescription());
+            preparedStatement.setString(1, plan.getName());
+            preparedStatement.setString(2, plan.getDescription());
             preparedStatement.setString(3, plan.getCreated());
-            preparedStatement.setInt(4,plan.getAdminId());
+            preparedStatement.setInt(4, plan.getAdminId());
             preparedStatement.executeUpdate();
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public int countOfPlans(int adminId){
+
+    public int countOfPlans(int adminId) {
         int count = 0;
-        try(Connection connection = DbUtil.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(SELECT_COUNT_OF_PLANS_QUERY)){
-           preparedStatement.setInt(1, adminId);
+        try (Connection connection = DbUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_COUNT_OF_PLANS_QUERY)) {
+            preparedStatement.setInt(1, adminId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     count = resultSet.getInt(1);
                 }
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return count;

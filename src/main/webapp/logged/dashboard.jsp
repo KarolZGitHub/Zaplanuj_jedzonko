@@ -28,7 +28,7 @@
             </div>
             <div class="menu-item border-dashed">
                 <a href="<c:url value="/app/plan/addRecipeToPlan.jsp"/>">
-                <i class="far fa-plus-square icon-plus-square"></i>
+                    <i class="far fa-plus-square icon-plus-square"></i>
                     <span class="title">dodaj przepis do planu</span>
                 </a>
             </div>
@@ -71,6 +71,7 @@
 
                 </tbody>
             </table>
+
         </c:forEach>
 
 
