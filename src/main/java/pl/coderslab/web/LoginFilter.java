@@ -23,6 +23,8 @@ public class LoginFilter implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession();
 
+
+
         if (session.getAttribute("admin") == null) {
             httpServletResponse.sendRedirect("/login");
         } else {
